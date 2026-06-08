@@ -1,9 +1,20 @@
+import { Route, Routes } from "react-router-dom";
+import Explore from "./pages/Explore";
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
+import PostDetail from "./pages/PostDetail";
+import Profile from "./pages/Profile";
+
 function App() {
   return (
-    <main>
-      <h1>Insta Clone</h1>
-      <p>Task 1 bootstrap is ready.</p>
-    </main>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/explore" element={<Explore />} />
+      <Route path="/profile/:userId" element={<Profile />} />
+      <Route path="/profile/me" element={<Profile />} />
+      <Route path="/post/:postId" element={<PostDetail />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
