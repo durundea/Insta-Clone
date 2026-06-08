@@ -27,6 +27,8 @@ export interface AddCommentPayload {
   comment: Comment;
 }
 
+export interface AddPostPayload extends Post {}
+
 const postsSlice = createSlice({
   name: "posts",
   initialState,
@@ -35,6 +37,15 @@ const postsSlice = createSlice({
       const nextState = toPostsState(action.payload);
       state.ids = nextState.ids;
       state.entities = nextState.entities;
+    },
+    addPost: (state, action: PayloadAction<AddPostPayload>) => {
+      const post = action.payload;
+
+      if (!state.entities[post.id]) {
+        state.ids.unshift(post.id);
+      }
+
+      state.entities[post.id] = post;
     },
     toggleLike: (state, action: PayloadAction<ToggleLikePayload>) => {
       const { postId, userId } = action.payload;
@@ -66,6 +77,6 @@ const postsSlice = createSlice({
   }
 });
 
-export const { setPosts, toggleLike, addComment } = postsSlice.actions;
+export const { setPosts, addPost, toggleLike, addComment } = postsSlice.actions;
 
 export default postsSlice.reducer;

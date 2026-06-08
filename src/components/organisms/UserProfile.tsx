@@ -1,5 +1,6 @@
-import { useAppSelector } from "../../store/hooks";
-import { selectUserById, selectPosts } from "../../store/selectors";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { selectUserById, selectPosts, selectCurrentUser } from "../../store/selectors";
+import { followUser, unfollowUser } from "../../store/slices/usersSlice";
 import { Avatar } from "../atoms/Avatar";
 import { Button } from "../atoms/Button";
 import { PostCard } from "./PostCard";
@@ -9,7 +10,9 @@ export interface UserProfileProps {
 }
 
 export function UserProfile({ userId }: UserProfileProps) {
+  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => selectUserById(state, userId));
+  const currentUser = useAppSelector(selectCurrentUser);
   const allPosts = useAppSelector(selectPosts);
 
   if (!user) {
@@ -19,6 +22,21 @@ export function UserProfile({ userId }: UserProfileProps) {
       </div>
     );
   }
+
+  const isOwnProfile = currentUser?.id === userId;
+  const isFollowing = currentUser?.following.includes(userId) ?? false;
+
+  const handleFollowToggle = () => {
+    if (!currentUser) {
+      return;
+    }
+
+    if (isFollowing) {
+      dispatch(unfollowUser({ userId: currentUser.id, targetUserId: userId }));
+    } else {
+      dispatch(followUser({ userId: currentUser.id, targetUserId: userId }));
+    }
+  };
 
   // Filter posts by this user
   const userPosts = allPosts.filter((post) => post.userId === userId);
@@ -56,9 +74,16 @@ export function UserProfile({ userId }: UserProfileProps) {
               </div>
             </div>
 
-            {/* Action Buttons - Task 9 will add follow/unfollow logic */}
+            {/* Action Buttons */}
             <div className="mt-4 flex gap-2 justify-center sm:justify-start">
-              <Button variant="primary">Follow</Button>
+              {!isOwnProfile && (
+                <Button
+                  variant={isFollowing ? "secondary" : "primary"}
+                  onClick={handleFollowToggle}
+                >
+                  {isFollowing ? "Following" : "Follow"}
+                </Button>
+              )}
               <Button variant="secondary">Message</Button>
             </div>
           </div>

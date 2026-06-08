@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { selectIsCreatePostModalOpen } from "../../store/selectors";
+import { selectIsCreatePostModalOpen, selectCurrentUser } from "../../store/selectors";
 import { toggleCreatePostModal } from "../../store/slices/uiSlice";
+import { addPost } from "../../store/slices/postsSlice";
 import { Button } from "../atoms/Button";
 import { Input } from "../atoms/Input";
 import { TextArea } from "../atoms/TextArea";
@@ -9,6 +10,7 @@ import { TextArea } from "../atoms/TextArea";
 export function CreatePostModal() {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector(selectIsCreatePostModalOpen);
+  const currentUser = useAppSelector(selectCurrentUser);
   const [imageUrl, setImageUrl] = useState("");
   const [caption, setCaption] = useState("");
 
@@ -16,26 +18,47 @@ export function CreatePostModal() {
     return null;
   }
 
+  const handlePublish = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!currentUser || !imageUrl || !caption) {
+      return;
+    }
+
+    const newPost = {
+      id: crypto.randomUUID(),
+      userId: currentUser.id,
+      image: imageUrl,
+      caption: caption,
+      likes: [],
+      comments: [],
+      timestamp: new Date().toISOString()
+    };
+
+    dispatch(addPost(newPost));
+    setImageUrl("");
+    setCaption("");
+    dispatch(toggleCreatePostModal());
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       <div className="w-full max-w-md rounded-lg bg-white p-6">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-xl font-bold text-ink">Create Post</h2>
           <button
-            onClick={() => dispatch(toggleCreatePostModal())}
+            onClick={() => {
+              dispatch(toggleCreatePostModal());
+              setImageUrl("");
+              setCaption("");
+            }}
             className="text-2xl font-bold text-ink/60 hover:text-ink"
           >
             ×
           </button>
         </div>
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            dispatch(toggleCreatePostModal());
-          }}
-          className="flex flex-col gap-4"
-        >
+        <form onSubmit={handlePublish} className="flex flex-col gap-4">
           <div>
             <label htmlFor="imageUrl" className="mb-2 block text-sm font-semibold text-ink">
               Image URL
@@ -66,7 +89,12 @@ export function CreatePostModal() {
           <div className="flex gap-2 pt-2">
             <Button
               variant="secondary"
-              onClick={() => dispatch(toggleCreatePostModal())}
+              type="button"
+              onClick={() => {
+                dispatch(toggleCreatePostModal());
+                setImageUrl("");
+                setCaption("");
+              }}
               className="flex-1"
             >
               Cancel
