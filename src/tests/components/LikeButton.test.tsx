@@ -1,16 +1,24 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
-import { Button } from "../../components/atoms/Button";
+import { Provider } from "react-redux";
+import { describe, expect, it } from "vitest";
+import { LikeButton } from "../../components/molecules/LikeButton";
+import { store } from "../../store/store";
 
-describe("Button", () => {
-  it("calls onClick when pressed", async () => {
-    const onClick = vi.fn();
+describe("LikeButton", () => {
+  it("dispatches toggleLike and updates post likes in state", async () => {
+    const postId = "p1";
+    const userId = "u1";
+    const initialLikes = store.getState().posts.entities[postId]?.likes ?? [];
 
-    render(<Button onClick={onClick}>Like</Button>);
+    render(
+      <Provider store={store}>
+        <LikeButton postId={postId} userId={userId} likes={initialLikes} />
+      </Provider>
+    );
 
-    await userEvent.click(screen.getByRole("button", { name: "Like" }));
+    await userEvent.click(screen.getByRole("button", { name: /like/i }));
 
-    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(store.getState().posts.entities[postId]?.likes).toContain(userId);
   });
 });
