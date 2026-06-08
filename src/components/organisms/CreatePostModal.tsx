@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectIsCreatePostModalOpen } from "../../store/selectors";
 import { toggleCreatePostModal } from "../../store/slices/uiSlice";
@@ -8,6 +9,8 @@ import { TextArea } from "../atoms/TextArea";
 export function CreatePostModal() {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector(selectIsCreatePostModalOpen);
+  const [imageUrl, setImageUrl] = useState("");
+  const [caption, setCaption] = useState("");
 
   if (!isOpen) {
     return null;
@@ -41,6 +44,8 @@ export function CreatePostModal() {
               id="imageUrl"
               type="url"
               placeholder="https://example.com/image.jpg"
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
               required
             />
           </div>
@@ -52,6 +57,8 @@ export function CreatePostModal() {
             <TextArea
               id="caption"
               placeholder="What's on your mind?"
+              value={caption}
+              onChange={(e) => setCaption(e.target.value)}
               rows={4}
             />
           </div>
