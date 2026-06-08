@@ -1,9 +1,17 @@
+import { MainLayout } from "../components/templates/MainLayout";
+import { PostFeed } from "../components/organisms/PostFeed";
+
 function Home() {
   return (
-    <main>
-      <h1>Home</h1>
-      <p>Home feed placeholder.</p>
-    </main>
+    <MainLayout>
+      <div className="flex flex-col gap-6">
+        <div>
+          <h1 className="text-3xl font-bold text-ink">Home</h1>
+          <p className="text-ink/60">Welcome to your feed</p>
+        </div>
+        <PostFeed />
+      </div>
+    </MainLayout>
   );
 }
 
