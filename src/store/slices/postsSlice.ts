@@ -40,7 +40,7 @@ const postsSlice = createSlice({
       const { postId, userId } = action.payload;
       const post = state.entities[postId];
 
-      if (!post) {
+      if (!post || !userId) {
         return;
       }
 

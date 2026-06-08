@@ -11,6 +11,7 @@ export interface LikeButtonProps {
 export function LikeButton({ postId, userId, likes }: LikeButtonProps) {
   const dispatch = useAppDispatch();
   const hasLiked = likes.includes(userId);
+  const canLike = Boolean(userId);
 
   return (
     <div className="flex items-center gap-3 px-4 py-3">
@@ -18,7 +19,14 @@ export function LikeButton({ postId, userId, likes }: LikeButtonProps) {
         variant={hasLiked ? "secondary" : "ghost"}
         className="px-3 py-1 text-sm"
         aria-label={hasLiked ? "Unlike post" : "Like post"}
-        onClick={() => dispatch(toggleLike({ postId, userId }))}
+        disabled={!canLike}
+        onClick={() => {
+          if (!canLike) {
+            return;
+          }
+
+          dispatch(toggleLike({ postId, userId }));
+        }}
       >
         {hasLiked ? "Unlike" : "Like"}
       </Button>
