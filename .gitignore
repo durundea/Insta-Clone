@@ -9,6 +9,7 @@ dist/
 build/
 out/
 .next/
+*.tsbuildinfo
 
 # Dev server
 .vite/

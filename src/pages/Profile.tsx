@@ -1,18 +1,16 @@
 import { useParams } from "react-router-dom";
-import { useAppSelector } from "../store/hooks";
-import { selectCurrentUser, selectUserById } from "../store/selectors";
 import { MainLayout } from "../components/templates/MainLayout";
 import { UserProfile } from "../components/organisms/UserProfile";
 import { Spinner } from "../components/atoms/Spinner";
+import { useAppSelector } from "../store/hooks";
+import { selectCurrentUserId } from "../store/selectors";
 
 function Profile() {
-  const { userId } = useParams<{ userId: string }>();
-  const currentUser = useAppSelector(selectCurrentUser);
+  const { userId: routeUserId } = useParams<{ userId: string }>();
+  const currentUserId = useAppSelector(selectCurrentUserId);
   const isLoading = useAppSelector((state) => state.ui.isLoading);
 
-  // If no userId in params, use current user's ID (profile/me route)
-  const profileUserId = userId === "me" ? currentUser?.id : userId;
-  const profile = useAppSelector((state) => selectUserById(state, profileUserId ?? ""));
+  const userId = routeUserId === "me" ? currentUserId : routeUserId;
 
   if (isLoading) {
     return (
@@ -24,11 +22,11 @@ function Profile() {
     );
   }
 
-  if (!profileUserId || !profile) {
+  if (!userId) {
     return (
       <MainLayout>
-        <div className="rounded-lg bg-red-50 p-6 text-center">
-          <p className="text-red-700 font-semibold">User not found</p>
+        <div className="mx-auto w-full max-w-2xl">
+          <p className="rounded bg-red-50 p-3 text-red-700">User not found</p>
         </div>
       </MainLayout>
     );
@@ -36,7 +34,7 @@ function Profile() {
 
   return (
     <MainLayout>
-      <UserProfile userId={profileUserId} />
+      <UserProfile userId={userId} />
     </MainLayout>
   );
 }
