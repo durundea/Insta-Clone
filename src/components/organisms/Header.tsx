@@ -13,7 +13,7 @@ export function Header() {
     <header className="border-b border-ink/10 bg-white">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <Link to="/" className="text-2xl font-bold text-accent">
-          Insta Clone
+          Instagram
         </Link>
 
         <div className="flex items-center gap-4">

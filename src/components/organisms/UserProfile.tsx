@@ -1,9 +1,9 @@
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectUserById, selectPosts, selectCurrentUser } from "../../store/selectors";
 import { followUser, unfollowUser } from "../../store/slices/usersSlice";
+import { Link } from "react-router-dom";
 import { Avatar } from "../atoms/Avatar";
 import { Button } from "../atoms/Button";
-import { PostCard } from "./PostCard";
 
 export interface UserProfileProps {
   userId: string;
@@ -96,9 +96,26 @@ export function UserProfile({ userId }: UserProfileProps) {
         {userPosts.length === 0 ? (
           <p className="text-center text-ink/60">No posts yet</p>
         ) : (
-          userPosts.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))
+          <div
+            data-testid="profile-post-grid"
+            className="grid grid-cols-2 gap-2 sm:grid-cols-3"
+          >
+            {userPosts.map((post) => (
+              <Link
+                key={post.id}
+                to={`/post/${post.id}`}
+                aria-label={`Open post: ${post.caption}`}
+                className="group relative block overflow-hidden rounded-md bg-ink/5"
+              >
+                <img
+                  src={post.image}
+                  alt={post.caption}
+                  loading="lazy"
+                  className="aspect-square w-full object-cover transition duration-200 group-hover:scale-105"
+                />
+              </Link>
+            ))}
+          </div>
         )}
       </section>
     </div>

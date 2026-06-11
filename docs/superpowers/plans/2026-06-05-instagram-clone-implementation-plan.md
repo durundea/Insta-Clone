@@ -1,8 +1,8 @@
-# Instagram Clone Implementation Plan
+# Instagram Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build a modular React + TypeScript Instagram clone SPA with mock data, Redux state management, Tailwind styling, and React Router navigation.
+**Goal:** Build a modular React + TypeScript Instagram SPA with mock data, Redux state management, Tailwind styling, and React Router navigation.
 
 **Architecture:** Use Atomic Design to organize UI from atoms to pages. Keep business state in Redux Toolkit slices (`users`, `posts`, `currentUser`, `ui`) and route views with React Router. Start from failing tests for reducers/selectors/components, then implement minimal code to pass.
 
@@ -72,7 +72,7 @@ Expected: command fails with missing test config/package because project is not 
 
 ```json
 {
-  "name": "insta-clone",
+  "name": "instagram",
   "private": true,
   "version": "0.0.0",
   "type": "module",

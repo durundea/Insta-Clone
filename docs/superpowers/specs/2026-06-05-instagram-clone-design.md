@@ -1,7 +1,7 @@
-# Instagram Clone Design Specification
+# Instagram Design Specification
 
 **Date:** 2026-06-05  
-**Project:** Simplified Instagram Clone  
+**Project:** Simplified Instagram  
 **Tech Stack:** React 18, TypeScript, Redux Toolkit, React Router v6, Tailwind CSS  
 **Status:** Design Approved
 
@@ -9,7 +9,7 @@
 
 ## 1. Project Overview
 
-A modular, single-page Instagram clone built to demonstrate:
+A modular, single-page Instagram app built to demonstrate:
 - **Nesting Components:** Atomic Design principles (atoms → molecules → organisms → templates)
 - **Passing Props:** Clean unidirectional data flow (parent → child)
 - **Managing State:** Redux-based centralized state management
@@ -31,7 +31,7 @@ A modular, single-page Instagram clone built to demonstrate:
 ## 2. Project Structure
 
 ```
-insta-clone/
+instagram/
 ├── public/
 ├── src/
 │   ├── components/

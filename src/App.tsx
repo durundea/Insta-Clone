@@ -11,7 +11,6 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/explore" element={<Explore />} />
       <Route path="/profile/:userId" element={<Profile />} />
-      <Route path="/profile/me" element={<Profile />} />
       <Route path="/post/:postId" element={<PostDetail />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

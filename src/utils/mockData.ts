@@ -4,31 +4,48 @@ const userCount = 12;
 const postCount = 60;
 const now = Date.now();
 
+const realNames = [
+  "Aarav Sharma",
+  "Priya Nair",
+  "Rohan Mehta",
+  "Ananya Iyer",
+  "Kabir Verma",
+  "Neha Kapoor",
+  "Arjun Rao",
+  "Isha Malhotra",
+  "Vivaan Gupta",
+  "Sanya Reddy",
+  "Aditya Khanna",
+  "Meera Joshi"
+];
+
 const baseUsers: User[] = Array.from({ length: userCount }, (_, index) => {
   const id = `u${index + 1}`;
 
   return {
     id,
     username: `user${index + 1}`,
-    fullName: `User ${index + 1}`,
+    fullName: realNames[index],
     avatar: `https://picsum.photos/seed/avatar${index + 1}/100/100`,
-    bio: `Bio for user ${index + 1}`,
+    bio: `${realNames[index]} sharing moments`,
     followers: [],
     following: [],
     posts: []
   };
 });
 
-const usersWithRelations: User[] = baseUsers.map((user, index) => {
-  const nextUser = baseUsers[(index + 1) % userCount];
-  const prevUser = baseUsers[(index - 1 + userCount) % userCount];
+const usersWithFollowing: User[] = baseUsers.map((user, index) => ({
+  ...user,
+  // Creates distinct following counts (0..11) for each profile.
+  following: baseUsers.slice(0, index).map((target) => target.id)
+}));
 
-  return {
-    ...user,
-    following: [nextUser.id],
-    followers: [prevUser.id]
-  };
-});
+const usersWithRelations: User[] = usersWithFollowing.map((user) => ({
+  ...user,
+  followers: usersWithFollowing
+    .filter((otherUser) => otherUser.following.includes(user.id))
+    .map((otherUser) => otherUser.id)
+}));
 
 const commentTemplates = [
   "Love this shot!",

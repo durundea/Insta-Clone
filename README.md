@@ -1,6 +1,6 @@
-# Instagram Clone
+# Instagram
 
-A modern, modular React + TypeScript Instagram clone built with Redux Toolkit, React Router, and Tailwind CSS. Features a responsive UI using Atomic Design patterns with mock data.
+A modern, modular React + TypeScript Instagram app built with Redux Toolkit, React Router, and Tailwind CSS. Features a responsive UI using Atomic Design patterns with mock data.
 
 ## Features
 
@@ -31,7 +31,7 @@ A modern, modular React + TypeScript Instagram clone built with Redux Toolkit, R
 
 ```bash
 # Clone or extract the project
-cd insta-clone
+cd instagram
 
 # Install dependencies
 npm install

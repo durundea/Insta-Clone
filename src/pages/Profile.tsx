@@ -3,14 +3,17 @@ import { MainLayout } from "../components/templates/MainLayout";
 import { UserProfile } from "../components/organisms/UserProfile";
 import { Spinner } from "../components/atoms/Spinner";
 import { useAppSelector } from "../store/hooks";
-import { selectCurrentUserId } from "../store/selectors";
+import { selectCurrentUserId, selectUsers } from "../store/selectors";
 
 function Profile() {
   const { userId: routeUserId } = useParams<{ userId: string }>();
   const currentUserId = useAppSelector(selectCurrentUserId);
+  const users = useAppSelector(selectUsers);
   const isLoading = useAppSelector((state) => state.ui.isLoading);
 
-  const userId = routeUserId === "me" ? currentUserId : routeUserId;
+  const userIdFromParam = routeUserId === "me" || !routeUserId
+    ? currentUserId
+    : users.find((user) => user.id === routeUserId || user.username === routeUserId)?.id;
 
   if (isLoading) {
     return (
@@ -22,7 +25,7 @@ function Profile() {
     );
   }
 
-  if (!userId) {
+  if (!userIdFromParam) {
     return (
       <MainLayout>
         <div className="mx-auto w-full max-w-2xl">
@@ -34,7 +37,7 @@ function Profile() {
 
   return (
     <MainLayout>
-      <UserProfile userId={userId} />
+      <UserProfile userId={userIdFromParam} />
     </MainLayout>
   );
 }

@@ -31,24 +31,22 @@ function renderAppAtRoute(route: string) {
   return store;
 }
 
-describe("create post flow", () => {
-  it("creates a new post from modal and shows it in feed", async () => {
-    renderAppAtRoute("/");
-    const user = userEvent.setup();
+describe("profile flow", () => {
+  it("loads current user profile on /profile/me", () => {
+    renderAppAtRoute("/profile/me");
 
-    await user.click(screen.getByRole("button", { name: /create post/i }));
-
-    await user.type(screen.getByLabelText(/image url/i), "https://picsum.photos/seed/new/800/800");
-    await user.type(screen.getByLabelText(/caption/i), "My new post");
-    await user.click(screen.getByRole("button", { name: /publish/i }));
-
-    expect(screen.getByText("My new post")).toBeTruthy();
+    expect(screen.queryByText(/user not found/i)).toBeNull();
+    expect(screen.getByRole("heading", { name: "Aarav Sharma" })).toBeTruthy();
+    expect(screen.getByTestId("profile-post-grid")).toBeTruthy();
   });
 
-  it("shows posts in grid format on explore page", () => {
-    renderAppAtRoute("/explore");
+  it("switches active profile from sidebar", async () => {
+    renderAppAtRoute("/profile/me");
+    const user = userEvent.setup();
 
-    expect(screen.getByRole("heading", { name: "Explore" })).toBeTruthy();
-    expect(screen.getByTestId("explore-post-grid")).toBeTruthy();
+    await user.selectOptions(screen.getByLabelText(/switch profile/i), "u3");
+
+    expect(screen.getByRole("heading", { name: "Rohan Mehta" })).toBeTruthy();
+    expect(screen.getByDisplayValue(/Rohan Mehta \(@user3\)/i)).toBeTruthy();
   });
 });

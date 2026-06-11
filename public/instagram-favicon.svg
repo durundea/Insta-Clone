@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Instagram favicon">
+  <defs>
+    <linearGradient id="igGradient" x1="0" y1="64" x2="64" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#feda75" />
+      <stop offset="0.35" stop-color="#fa7e1e" />
+      <stop offset="0.6" stop-color="#d62976" />
+      <stop offset="0.8" stop-color="#962fbf" />
+      <stop offset="1" stop-color="#4f5bd5" />
+    </linearGradient>
+  </defs>
+  <rect x="6" y="6" width="52" height="52" rx="16" fill="url(#igGradient)" />
+  <rect x="18" y="18" width="28" height="28" rx="10" fill="none" stroke="#ffffff" stroke-width="4" />
+  <circle cx="32" cy="32" r="7" fill="none" stroke="#ffffff" stroke-width="4" />
+  <circle cx="43" cy="21" r="3" fill="#ffffff" />
+</svg>
