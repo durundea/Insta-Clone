@@ -22,7 +22,10 @@ function renderAppAtRoute(route: string) {
 
   render(
     <Provider store={store}>
-      <MemoryRouter initialEntries={[route]}>
+      <MemoryRouter
+        initialEntries={[route]}
+        future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+      >
         <App />
       </MemoryRouter>
     </Provider>
