@@ -32,11 +32,18 @@ function renderAppAtRoute(route: string) {
 }
 
 describe("create post flow", () => {
+  it("shows stories bar on home page", () => {
+    renderAppAtRoute("/");
+
+    expect(screen.getByTestId("home-stories-bar")).toBeTruthy();
+    expect(screen.getAllByTestId("story-item").length).toBeGreaterThan(0);
+  });
+
   it("creates a new post from modal and shows it in feed", async () => {
     renderAppAtRoute("/");
     const user = userEvent.setup();
 
-    await user.click(screen.getByRole("button", { name: /create post/i }));
+    await user.click(screen.getAllByRole("button", { name: /create post/i })[0]);
 
     await user.type(screen.getByLabelText(/image url/i), "https://picsum.photos/seed/new/800/800");
     await user.type(screen.getByLabelText(/caption/i), "My new post");
