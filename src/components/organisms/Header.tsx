@@ -11,7 +11,7 @@ export function Header() {
 
   return (
     <header className="border-b border-ink/10 bg-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-3">
         <Link to="/" className="text-2xl font-bold text-accent">
           Instagram
         </Link>

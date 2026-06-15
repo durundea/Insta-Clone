@@ -42,6 +42,16 @@ describe("create post flow", () => {
     expect(screen.getAllByTestId("story-item").length).toBeGreaterThan(0);
   });
 
+  it("opens story viewer when a story is clicked", async () => {
+    renderAppAtRoute("/");
+    const user = userEvent.setup();
+
+    await user.click(screen.getAllByTestId("story-item")[1]);
+
+    expect(screen.getByTestId("story-viewer")).toBeTruthy();
+    expect(screen.queryByTestId("profile-post-grid")).toBeNull();
+  });
+
   it("creates a new post from modal and shows it in feed", async () => {
     renderAppAtRoute("/");
     const user = userEvent.setup();

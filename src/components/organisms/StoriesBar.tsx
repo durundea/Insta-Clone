@@ -20,7 +20,7 @@ export function StoriesBar() {
           return (
             <Link
               key={user.id}
-              to={`/profile/${user.username}`}
+              to={`/stories/${user.username}`}
               data-testid="story-item"
               className="group flex min-w-[72px] flex-col items-center gap-2"
               aria-label={`Open ${user.fullName} story`}

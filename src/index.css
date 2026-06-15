@@ -4,5 +4,10 @@
 
 body {
   @apply bg-paper text-ink;
+  margin: 0;
   font-family: "Segoe UI", sans-serif;
+}
+
+#root {
+  width: 100%;
 }

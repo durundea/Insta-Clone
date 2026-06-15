@@ -18,11 +18,11 @@ function Explore() {
         </div>
 
         {isLoading ? (
-          <div className="mx-auto flex w-full max-w-6xl justify-center py-12" aria-label="Explore loading">
+          <div className="mx-auto flex w-full justify-center py-12" aria-label="Explore loading">
             <Spinner size="lg" />
           </div>
         ) : error ? (
-          <div className="mx-auto w-full max-w-6xl">
+          <div className="mx-auto w-full">
             <div className="rounded-lg bg-red-50 p-4 text-red-700">
               <p className="font-semibold">Error loading posts</p>
               <p className="text-sm">{error}</p>
@@ -31,7 +31,7 @@ function Explore() {
         ) : (
           <section
             data-testid="explore-post-grid"
-            className="mx-auto grid w-full max-w-6xl grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4"
+            className="mx-auto grid w-full grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4"
             aria-label="Explore posts"
           >
             {posts.map((post) => (
